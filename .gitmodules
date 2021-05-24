@@ -1,4 +1,0 @@
-[submodule "Plugins/EnhancedCodeFlow"]
-	path = Plugins/EnhancedCodeFlow
-	url = https://github.com/zompi2/UE4EnhancedCodeFlow.git
-	branch = main
