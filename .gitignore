@@ -1,6 +1,3 @@
-# ECFExample ignores
-Plugins/EnhancedCodeFlow/
-
 # Rider user specific files
 .idea/
 Plugins/Developer/RiderLink
