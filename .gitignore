@@ -1,3 +1,10 @@
+# ECFExample ignores
+Plugins/EnhancedCodeFlow/
+
+# Rider user specific files
+.idea/
+Plugins/Developer/RiderLink
+
 # Visual Studio 2015 user specific files
 .vs/
 
