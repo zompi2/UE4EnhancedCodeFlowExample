@@ -14,8 +14,7 @@ public class ECFExample : ModuleRules
 			"Engine", 
 			"InputCore",
 			"UMG",
-			"EnhancedCodeFlow",
-			"Http"
+			"EnhancedCodeFlow"
 		});
 	}
 }
