@@ -5,10 +5,10 @@ using System.Collections.Generic;
 
 public class ECFExampleTarget : TargetRules
 {
-	public ECFExampleTarget( TargetInfo Target) : base(Target)
+	public ECFExampleTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
-		ExtraModuleNames.AddRange( new string[] { "ECFExample" } );
+		ExtraModuleNames.Add("ECFExample");
 	}
 }
