@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "ECFTypes.h"
+#include "ECFInstanceId.h"
 #include "ExampleWidget.generated.h"
 
 UENUM(BlueprintType)
@@ -102,4 +103,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void TimeLockTest(ETimeLockTestType Type);
+
+	FECFInstanceId Inst2Sec;
+	FECFInstanceId Inst5Sec;
 };
