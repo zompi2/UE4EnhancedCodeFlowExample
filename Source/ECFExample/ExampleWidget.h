@@ -7,6 +7,13 @@
 #include "ECFTypes.h"
 #include "ExampleWidget.generated.h"
 
+UENUM(BlueprintType)
+enum class ETimeLockTestType : uint8
+{
+	TL2Sec,
+	TL5Sec
+};
+
 UCLASS()
 class ECFEXAMPLE_API UExampleWidget : public UUserWidget
 {
@@ -92,4 +99,7 @@ public:
 	float WhileTrueExecuteTickerValue = 0.f;
 
 	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+	UFUNCTION(BlueprintCallable)
+	void TimeLockTest(ETimeLockTestType Type);
 };

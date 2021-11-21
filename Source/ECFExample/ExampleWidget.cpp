@@ -121,4 +121,24 @@ void UExampleWidget::WhileTrueExecuteTest()
 	});
 }
 
+void UExampleWidget::TimeLockTest(ETimeLockTestType Type)
+{
+	if (Type == ETimeLockTestType::TL2Sec)
+	{
+		AddToLog_Internal(TEXT("Start TimeLock 2 sec Test"));
+		FFlow::TimeLock(this, 2.f, [this]()
+		{
+			AddToLog_Internal(TEXT("TimeLock 2 sec Is Opened"));
+		}, ECF_INSTANCEID);
+	}
+	else if (Type == ETimeLockTestType::TL5Sec)
+	{
+		AddToLog_Internal(TEXT("Start TimeLock 5 sec Test"));
+		FFlow::TimeLock(this, 5.f, [this]()
+		{
+			AddToLog_Internal(TEXT("TimeLock 5 sec Is Opened"));
+		}, ECF_INSTANCEID);
+	}
+}
+
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
