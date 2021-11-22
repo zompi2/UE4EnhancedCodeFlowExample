@@ -126,18 +126,22 @@ void UExampleWidget::TimeLockTest(ETimeLockTestType Type)
 	if (Type == ETimeLockTestType::TL2Sec)
 	{
 		AddToLog_Internal(TEXT("Start TimeLock 2 sec Test"));
+
+		static FECFInstanceId Inst2Sec = FECFInstanceId::NewId();
 		FFlow::TimeLock(this, 2.f, [this]()
 		{
 			AddToLog_Internal(TEXT("TimeLock 2 sec Is Opened"));
-		}, Inst2Sec.Validate());
+		}, Inst2Sec);
 	}
 	else if (Type == ETimeLockTestType::TL5Sec)
 	{
 		AddToLog_Internal(TEXT("Start TimeLock 5 sec Test"));
+
+		static FECFInstanceId Inst5Sec = FECFInstanceId::NewId();
 		FFlow::TimeLock(this, 5.f, [this]()
 		{
 			AddToLog_Internal(TEXT("TimeLock 5 sec Is Opened"));
-		}, Inst5Sec.Validate());
+		}, Inst5Sec);
 	}
 }
 

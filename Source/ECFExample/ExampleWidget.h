@@ -103,7 +103,4 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void TimeLockTest(ETimeLockTestType Type);
-
-	FECFInstanceId Inst2Sec;
-	FECFInstanceId Inst5Sec;
 };
