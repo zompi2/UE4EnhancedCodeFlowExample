@@ -121,13 +121,15 @@ void UExampleWidget::WhileTrueExecuteTest()
 	});
 }
 
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+static FECFInstanceId Inst2Sec = FECFInstanceId::NewId();
+static FECFInstanceId Inst5Sec = FECFInstanceId::NewId();
+
 void UExampleWidget::TimeLockTest(ETimeLockTestType Type)
 {
 	if (Type == ETimeLockTestType::TL2Sec)
 	{
-		AddToLog_Internal(TEXT("Start TimeLock 2 sec Test"));
-
-		static FECFInstanceId Inst2Sec = FECFInstanceId::NewId();
 		FFlow::TimeLock(this, 2.f, [this]()
 		{
 			AddToLog_Internal(TEXT("TimeLock 2 sec Is Opened"));
@@ -135,9 +137,6 @@ void UExampleWidget::TimeLockTest(ETimeLockTestType Type)
 	}
 	else if (Type == ETimeLockTestType::TL5Sec)
 	{
-		AddToLog_Internal(TEXT("Start TimeLock 5 sec Test"));
-
-		static FECFInstanceId Inst5Sec = FECFInstanceId::NewId();
 		FFlow::TimeLock(this, 5.f, [this]()
 		{
 			AddToLog_Internal(TEXT("TimeLock 5 sec Is Opened"));
@@ -146,3 +145,39 @@ void UExampleWidget::TimeLockTest(ETimeLockTestType Type)
 }
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+static FECFInstanceId DoOnceInst = FECFInstanceId::NewId();
+
+void UExampleWidget::DoOnceTest()
+{
+	FFlow::DoOnce(this, [this]()
+	{
+		AddToLog_Internal(TEXT("DoOnce Test"));
+	}, DoOnceInst);
+}
+
+void UExampleWidget::ResetDoOnce()
+{
+	FFlow::StopInstancedAction(GetWorld(), DoOnceInst);
+}
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+static FECFInstanceId DoNTimesInst = FECFInstanceId::NewId();
+
+void UExampleWidget::DoNTimesTest(int32 Times)
+{
+	if (Times > 0)
+	{
+		FFlow::DoNTimes(this, Times, [this](int32 Counter)
+		{
+			AddToLog_Internal(FString::Printf(TEXT("DoNTimes Test, counter: %i"), Counter));
+		}, DoNTimesInst);
+	}
+}
+
+void UExampleWidget::ResetDoNTimes()
+{
+	FFlow::StopInstancedAction(GetWorld(), DoNTimesInst);
+}
+
