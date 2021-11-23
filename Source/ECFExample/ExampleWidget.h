@@ -103,4 +103,20 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void TimeLockTest(ETimeLockTestType Type);
+
+	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+	UFUNCTION(BlueprintCallable)
+	void DoOnceTest();
+
+	UFUNCTION(BlueprintCallable)
+	void ResetDoOnce();
+
+	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+	UFUNCTION(BlueprintCallable)
+	void DoNTimesTest(int32 Times);
+
+	UFUNCTION(BlueprintCallable)
+	void ResetDoNTimes();
 };
