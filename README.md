@@ -14,9 +14,3 @@ git fetch
 git pull
 git submodule update --remote
 ```
-
-### UE5
-
-This project works with Unreal Engine 5 too!  
-Checkout branch **ue5** to get a compatible version.  
-Ensure, that the plugin is from branch **ue5** too. 
