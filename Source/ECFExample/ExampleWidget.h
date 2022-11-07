@@ -119,4 +119,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ResetDoNTimes();
+
+	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+	UFUNCTION(BlueprintCallable)
+	void DoNoMoreThanXTime();
 };
