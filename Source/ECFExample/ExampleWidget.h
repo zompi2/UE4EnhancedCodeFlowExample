@@ -123,5 +123,5 @@ public:
 	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
 	UFUNCTION(BlueprintCallable)
-	void DoNoMoreThanXTime();
+	void DoNoMoreThanXTime(float Time = 5.f, int32 MaxExecsEnqueue = 1);
 };
