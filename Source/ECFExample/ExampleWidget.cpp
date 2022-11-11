@@ -178,3 +178,13 @@ void UExampleWidget::ResetDoNTimes()
 	FFlow::StopInstancedAction(GetWorld(), DoNTimesInst);
 }
 
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+static FECFInstanceId DoNoMoreThanXTimeInst = FECFInstanceId::NewId();
+void UExampleWidget::DoNoMoreThanXTime(float Time/* = 5.f*/, int32 MaxExecsEnqueue/* = 1*/)
+{
+	FFlow::DoNoMoreThanXTime(this, [this]()
+	{
+		AddToLog_Internal(TEXT("Do No More Than X Times Executed"));
+	}, Time, MaxExecsEnqueue, DoNoMoreThanXTimeInst);
+}
