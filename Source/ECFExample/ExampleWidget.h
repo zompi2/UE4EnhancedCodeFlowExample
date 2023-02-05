@@ -75,10 +75,10 @@ public:
 	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
 	UFUNCTION(BlueprintCallable)
-	void WaitAndExecuteTest();
+	void WaitAndExecuteTest(float TimeOut);
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void WaitAndExecuteTestFinished();
+	void WaitAndExecuteTestFinished(bool bTimedOut);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bWaitAndExecuteConditional = false;
@@ -86,10 +86,10 @@ public:
 	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
 	UFUNCTION(BlueprintCallable)
-	void WhileTrueExecuteTest();
+	void WhileTrueExecuteTest(float TimeOut = 0.f);
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void WhileTrueExecuteTestFinished();
+	void WhileTrueExecuteTestFinished(bool bTimedOut);
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void SetWhileTrueExecuteTickerValue_BP(float NewValue);

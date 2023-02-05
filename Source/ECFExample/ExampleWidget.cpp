@@ -85,40 +85,55 @@ void UExampleWidget::CustomTimelineTest(UCurveFloat* Curve)
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
-void UExampleWidget::WaitAndExecuteTest()
+void UExampleWidget::WaitAndExecuteTest(float TimeOut)
 {
 	AddToLog_Internal(TEXT("Start Wait And Execute Test"));
 	FFlow::WaitAndExecute(this, [this]()
 	{
 		return bWaitAndExecuteConditional;
 	},
-	[this]()
+	[this](bool bTimedOut)
 	{
-		AddToLog_Internal(TEXT("Wait And Execute Test Finished"));
-		WaitAndExecuteTestFinished();
-	});
+		if (bTimedOut)
+		{
+			AddToLog_Internal(TEXT("Wait And Execute Test Finished - TimeOut!"));
+		}
+		else
+		{
+			AddToLog_Internal(TEXT("Wait And Execute Test Finished"));
+		}
+		WaitAndExecuteTestFinished(bTimedOut);
+	}, TimeOut);
 }
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
-void UExampleWidget::WhileTrueExecuteTest()
+void UExampleWidget::WhileTrueExecuteTest(float TimeOut/* = 0.f*/)
 {
 	AddToLog_Internal(TEXT("Start While True Execute Test"));
 	WhileTrueExecuteTickerValue = 0.f;
 	FFlow::WhileTrueExecute(this, [this]()
 	{
-		if (bWhileTrueExecuteConditional == false)
-		{
-			AddToLog_Internal(TEXT("While True Execute Test Finished"));
-			WhileTrueExecuteTestFinished();
-		}
 		return bWhileTrueExecuteConditional;
 	},
 	[this](float DeltaTime)
 	{
 		WhileTrueExecuteTickerValue += DeltaTime;
 		SetWhileTrueExecuteTickerValue_BP(WhileTrueExecuteTickerValue);
-	});
+	}, 
+	[this](bool bTimedOut)
+	{
+		if (bTimedOut)
+		{
+			AddToLog_Internal(TEXT("While True Execute Test Finished - TimeOut!"));
+		}
+		else
+		{
+			AddToLog_Internal(TEXT("While True Execute Test Finished"));
+		}
+		WhileTrueExecuteTestFinished(bTimedOut);
+	},
+	TimeOut);
 }
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
