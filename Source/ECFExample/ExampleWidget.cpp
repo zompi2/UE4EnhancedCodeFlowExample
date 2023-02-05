@@ -5,8 +5,12 @@
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
-void UExampleWidget::AddToLog_Internal(FString Log)
+void UExampleWidget::AddToLog_Internal(FString Log, bool bStopped/* = false*/)
 {
+	if (bStopped)
+	{
+		Log += TEXT(" (Stopped)");
+	}
 	AddToLog(FDateTime::Now().ToString() + TEXT(": ") + Log);
 }
 
@@ -15,9 +19,9 @@ void UExampleWidget::AddToLog_Internal(FString Log)
 void UExampleWidget::DelayTest()
 {
 	AddToLog_Internal(TEXT("Start Delay Test"));
-	FFlow::Delay(this, 2.f, [this]()
+	FFlow::Delay(this, 2.f, [this](bool bStopped)
 	{
-		AddToLog_Internal(TEXT("Delay Test Finished"));
+		AddToLog_Internal(TEXT("Delay Test Finished"), bStopped);
 		DelayTestFinished();
 	});
 }
@@ -31,17 +35,16 @@ void UExampleWidget::TickerTest()
 	TickerValue = 0.f;
 	SetTickerValue_BP(TickerValue);
 
-	FFlow::AddTicker(this, [this](float DeltaTime, FECFHandle TickerHandle)
+	FFlow::AddTicker(this, 2.f,
+	[this](float DeltaTime)
 	{
 		TickerValue += DeltaTime;
 		SetTickerValue_BP(TickerValue);
-
-		if (TickerValue >= 2.f)
-		{
-			AddToLog_Internal(TEXT("Ticker Test Finished"));
-			FFlow::StopAction(this, TickerHandle);
-			TickerTestFinished();
-		}
+	},
+	[this](bool bStopped)
+	{
+		AddToLog_Internal(TEXT("Ticker Test Finished"), bStopped);
+		TickerTestFinished(bStopped);
 	});
 }
 
@@ -56,10 +59,10 @@ void UExampleWidget::TimelineTest(EECFBlendFunc TimelineFunc, float StartValue, 
 	FFlow::AddTimeline(this, StartValue, StopValue, 2.f, [this](float Value, float Time)
 	{
 		SetTimelineValue_BP(Value, Time);
-	}, [this](float Value, float Time)
+	}, [this](float Value, float Time, bool bStopped)
 	{
 		SetTimelineValue_BP(Value, Time);
-		AddToLog_Internal(TEXT("Timeline Test Finished"));
+		AddToLog_Internal(TEXT("Timeline Test Finished"), bStopped);
 		TimelineTestFinished();
 	}, TimelineFunc, 2.f);
 }
@@ -75,10 +78,10 @@ void UExampleWidget::CustomTimelineTest(UCurveFloat* Curve)
 	FFlow::AddCustomTimeline(this, Curve, [this](float Value, float Time)
 	{
 		SetCustomTimelineValue_BP(Value, Time);
-	}, [this](float Value, float Time)
+	}, [this](float Value, float Time, bool bStopped)
 	{
 		SetCustomTimelineValue_BP(Value, Time);
-		AddToLog_Internal(TEXT("Custom Timeline Test Finished"));
+		AddToLog_Internal(TEXT("Custom Timeline Test Finished"), bStopped);
 		CustomTimelineTestFinished();
 	});
 }
@@ -92,15 +95,15 @@ void UExampleWidget::WaitAndExecuteTest(float TimeOut)
 	{
 		return bWaitAndExecuteConditional;
 	},
-	[this](bool bTimedOut)
+	[this](bool bTimedOut, bool bStopped)
 	{
 		if (bTimedOut)
 		{
-			AddToLog_Internal(TEXT("Wait And Execute Test Finished - TimeOut!"));
+			AddToLog_Internal(TEXT("Wait And Execute Test Finished - TimeOut!"), bStopped);
 		}
 		else
 		{
-			AddToLog_Internal(TEXT("Wait And Execute Test Finished"));
+			AddToLog_Internal(TEXT("Wait And Execute Test Finished"), bStopped);
 		}
 		WaitAndExecuteTestFinished(bTimedOut);
 	}, TimeOut);
@@ -121,15 +124,15 @@ void UExampleWidget::WhileTrueExecuteTest(float TimeOut/* = 0.f*/)
 		WhileTrueExecuteTickerValue += DeltaTime;
 		SetWhileTrueExecuteTickerValue_BP(WhileTrueExecuteTickerValue);
 	}, 
-	[this](bool bTimedOut)
+	[this](bool bTimedOut, bool bStopped)
 	{
 		if (bTimedOut)
 		{
-			AddToLog_Internal(TEXT("While True Execute Test Finished - TimeOut!"));
+			AddToLog_Internal(TEXT("While True Execute Test Finished - TimeOut!"), bStopped);
 		}
 		else
 		{
-			AddToLog_Internal(TEXT("While True Execute Test Finished"));
+			AddToLog_Internal(TEXT("While True Execute Test Finished"), bStopped);
 		}
 		WhileTrueExecuteTestFinished(bTimedOut);
 	},

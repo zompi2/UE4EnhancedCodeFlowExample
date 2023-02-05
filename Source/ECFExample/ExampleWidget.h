@@ -24,7 +24,7 @@ public:
 
 	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
-	void AddToLog_Internal(FString Log);
+	void AddToLog_Internal(FString Log, bool bStopped = false);
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void AddToLog(const FString& Log);
@@ -43,7 +43,7 @@ public:
 	void TickerTest();
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void TickerTestFinished();
+	void TickerTestFinished(bool bStopped);
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void SetTickerValue_BP(float NewValue);
