@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Damian Nowakowski. All rights reserved.
+// Copyright (c) 2023 Damian Nowakowski. All rights reserved.
 
 #pragma once
 
@@ -24,7 +24,7 @@ public:
 
 	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
-	void AddToLog_Internal(FString Log);
+	void AddToLog_Internal(FString Log, bool bStopped = false);
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void AddToLog(const FString& Log);
@@ -43,7 +43,7 @@ public:
 	void TickerTest();
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void TickerTestFinished();
+	void TickerTestFinished(bool bStopped);
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void SetTickerValue_BP(float NewValue);
@@ -75,10 +75,10 @@ public:
 	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
 	UFUNCTION(BlueprintCallable)
-	void WaitAndExecuteTest();
+	void WaitAndExecuteTest(float TimeOut);
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void WaitAndExecuteTestFinished();
+	void WaitAndExecuteTestFinished(bool bTimedOut);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bWaitAndExecuteConditional = false;
@@ -86,10 +86,10 @@ public:
 	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
 	UFUNCTION(BlueprintCallable)
-	void WhileTrueExecuteTest();
+	void WhileTrueExecuteTest(float TimeOut = 0.f);
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void WhileTrueExecuteTestFinished();
+	void WhileTrueExecuteTestFinished(bool bTimedOut);
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void SetWhileTrueExecuteTickerValue_BP(float NewValue);
