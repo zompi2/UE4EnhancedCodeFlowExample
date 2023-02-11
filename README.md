@@ -1,8 +1,7 @@
 # Enhanced Code for Unreal Engine 4 - Example Project
 
 This is an example project which uses the Enhanced Code Flow plugin for UE4.  
-The plugin is located in **[this repository](https://github.com/zompi2/UE4EnhancedCodeFlow)**.  
-This example works **ONLY** with the **main** branch of the plugin.  
+The plugin is located in **[this repository](https://github.com/zompi2/UE4EnhancedCodeFlow/tree/Legacy-2.1)**.  
 This repository has a submodule that points to the repository with plugin.  
 
 ## Working with submodules
