@@ -83,6 +83,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bWaitAndExecuteConditional = false;
 
+	float WaitAndExecuteTime = 0.f;
+
 	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
 	UFUNCTION(BlueprintCallable)
