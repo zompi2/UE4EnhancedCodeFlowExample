@@ -26,6 +26,16 @@ void UExampleWidget::DelayTest()
 	});
 }
 
+void UExampleWidget::DelayTicksTest()
+{
+	AddToLog_Internal(TEXT("Start Delay Ticks Test"));
+	FFlow::DelayTicks(this, 100, [this](bool bStopped)
+	{
+		AddToLog_Internal(TEXT("Delay Test Ticks Finished"), bStopped);
+		DelayTicksTestFinished();
+	});
+}
+
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
 void UExampleWidget::TickerTest()
@@ -91,19 +101,21 @@ void UExampleWidget::CustomTimelineTest(UCurveFloat* Curve)
 void UExampleWidget::WaitAndExecuteTest(float TimeOut)
 {
 	AddToLog_Internal(TEXT("Start Wait And Execute Test"));
-	FFlow::WaitAndExecute(this, [this]()
+	WaitAndExecuteTime = 0.f;
+	FFlow::WaitAndExecute(this, [this](float DeltaTime)
 	{
+		WaitAndExecuteTime += DeltaTime;
 		return bWaitAndExecuteConditional;
 	},
 	[this](bool bTimedOut, bool bStopped)
 	{
 		if (bTimedOut)
 		{
-			AddToLog_Internal(TEXT("Wait And Execute Test Finished - TimeOut!"), bStopped);
+			AddToLog_Internal(FString::Printf(TEXT("Wait And Execute Test Finished - TimeOut!\n>>> Total Time: %f"), WaitAndExecuteTime), bStopped);
 		}
 		else
 		{
-			AddToLog_Internal(TEXT("Wait And Execute Test Finished"), bStopped);
+			AddToLog_Internal(FString::Printf(TEXT("Wait And Execute Test Finished.\n>>> Total Time: %f"), WaitAndExecuteTime), bStopped);
 		}
 		WaitAndExecuteTestFinished(bTimedOut);
 	}, TimeOut);
