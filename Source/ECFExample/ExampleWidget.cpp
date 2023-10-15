@@ -26,6 +26,16 @@ void UExampleWidget::DelayTest()
 	});
 }
 
+void UExampleWidget::DelayTicksTest()
+{
+	AddToLog_Internal(TEXT("Start Delay Ticks Test"));
+	FFlow::DelayTicks(this, 100, [this](bool bStopped)
+	{
+		AddToLog_Internal(TEXT("Delay Test Ticks Finished"), bStopped);
+		DelayTicksTestFinished();
+	});
+}
+
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
 void UExampleWidget::TickerTest()
