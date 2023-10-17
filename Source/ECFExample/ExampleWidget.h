@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "ECFTypes.h"
+#include "ECFCoroutines.h"
 #include "ECFInstanceId.h"
 #include "ExampleWidget.generated.h"
 
@@ -36,6 +37,13 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void DelayTestFinished();
+
+	UFUNCTION(BlueprintCallable)
+	void WaitSecondsTest();
+	FECFCoroutine WaitSecondsTest_Implementation();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void WaitSecondsTestFinished();
 
 	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 

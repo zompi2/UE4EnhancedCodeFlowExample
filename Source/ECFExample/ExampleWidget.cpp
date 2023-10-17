@@ -26,6 +26,19 @@ void UExampleWidget::DelayTest()
 	});
 }
 
+void UExampleWidget::WaitSecondsTest()
+{
+	WaitSecondsTest_Implementation();
+}
+
+FECFCoroutine UExampleWidget::WaitSecondsTest_Implementation()
+{
+	AddToLog_Internal(TEXT("Start Wait Seconds Test"));
+	co_await FFlow::WaitSeconds(this, 2.f);
+	AddToLog_Internal(TEXT("Wait Seconds Test Finished"));
+	WaitSecondsTestFinished();
+}
+
 void UExampleWidget::DelayTicksTest()
 {
 	AddToLog_Internal(TEXT("Start Delay Ticks Test"));
