@@ -26,6 +26,8 @@ void UExampleWidget::DelayTest()
 	});
 }
 
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
 void UExampleWidget::WaitSecondsTest()
 {
 	WaitSecondsTest_Implementation();
@@ -38,6 +40,23 @@ FECFCoroutine UExampleWidget::WaitSecondsTest_Implementation()
 	AddToLog_Internal(TEXT("Wait Seconds Test Finished"));
 	WaitSecondsTestFinished();
 }
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+void UExampleWidget::WaitTicksTest()
+{
+	WaitTicksTest_Implementation();
+}
+
+FECFCoroutine UExampleWidget::WaitTicksTest_Implementation()
+{
+	AddToLog_Internal(TEXT("Start Wait Ticks Test"));
+	co_await FFlow::WaitTicks(this, 100);
+	AddToLog_Internal(TEXT("Wait Ticks Test Finished"));
+	WaitTicksTestFinished();
+}
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
 void UExampleWidget::DelayTicksTest()
 {
@@ -132,6 +151,26 @@ void UExampleWidget::WaitAndExecuteTest(float TimeOut)
 		}
 		WaitAndExecuteTestFinished(bTimedOut);
 	}, TimeOut);
+}
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+void UExampleWidget::WaitUntilTest(float TimeOut)
+{
+	WaitUntilTest_Implementation(TimeOut);
+}
+
+FECFCoroutine UExampleWidget::WaitUntilTest_Implementation(float TimeOut)
+{
+	AddToLog_Internal(TEXT("Start Wait Until Test"));
+	WaitAndExecuteTime = 0.f;
+	co_await FFlow::WaitUntil(this, [this](float DeltaTime)
+	{
+		WaitAndExecuteTime += DeltaTime;
+		return bWaitAndExecuteConditional;
+	}, TimeOut);
+	AddToLog_Internal(FString::Printf(TEXT("Wait Until Test Finished\n>>> Total Time: %f"), WaitAndExecuteTime));
+	WaitUntilTestFinished();
 }
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
