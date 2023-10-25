@@ -7,7 +7,8 @@ public class ECFExample : ModuleRules
 	public ECFExample(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-        CppStandard = CppStandardVersion.Cpp20;
+        CppStandard = CppStandardVersion.Default;
+
         PublicDependencyModuleNames.AddRange(new string[] { 
 			"Core", 
 			"CoreUObject", 
