@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "ECFTypes.h"
-#include "ECFCoroutines.h"
+#include "ECFCoroutine.h"
 #include "ECFInstanceId.h"
 #include "ExampleWidget.generated.h"
 
