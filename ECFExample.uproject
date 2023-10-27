@@ -17,18 +17,6 @@
 		{
 			"Name": "EnhancedCodeFlow",
 			"Enabled": true
-		},
-		{
-			"Name": "OpenXREyeTracker",
-			"Enabled": false
-		},
-		{
-			"Name": "OpenXRHandTracking",
-			"Enabled": false
-		},
-		{
-			"Name": "OpenXR",
-			"Enabled": false
 		}
 	]
 }
