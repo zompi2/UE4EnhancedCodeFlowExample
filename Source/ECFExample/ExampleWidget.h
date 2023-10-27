@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "ECFTypes.h"
+#include "ECFCoroutine.h"
 #include "ECFInstanceId.h"
 #include "ExampleWidget.generated.h"
 
@@ -36,6 +37,24 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void DelayTestFinished();
+
+	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+	UFUNCTION(BlueprintCallable)
+	void WaitSecondsTest();
+	FECFCoroutine WaitSecondsTest_Implementation();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void WaitSecondsTestFinished();
+
+	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+	UFUNCTION(BlueprintCallable)
+	void WaitTicksTest();
+	FECFCoroutine WaitTicksTest_Implementation();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void WaitTicksTestFinished();
 
 	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
@@ -92,6 +111,15 @@ public:
 	bool bWaitAndExecuteConditional = false;
 
 	float WaitAndExecuteTime = 0.f;
+
+	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+	UFUNCTION(BlueprintCallable)
+	void WaitUntilTest(float TimeOut);
+	FECFCoroutine WaitUntilTest_Implementation(float TimeOut);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void WaitUntilTestFinished();
 
 	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
