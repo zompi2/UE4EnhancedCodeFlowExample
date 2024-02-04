@@ -211,6 +211,36 @@ void UExampleWidget::WhileTrueExecuteTest(float TimeOut/* = 0.f*/)
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
+void UExampleWidget::RunAsyncTaskThenTest(float TimeOut)
+{
+	AddToLog_Internal(TEXT("Start Run Async Task Then Test"));
+
+	FFlow::RunAsyncThen(this, [this]()
+	{
+		int32 Count = 0;
+		while (Count < 3)
+		{
+			Count++;
+			FPlatformProcess::Sleep(1.f);
+		}
+	},
+	[this](bool bTimedOut, bool bStopped)
+	{
+		if (bTimedOut)
+		{
+			AddToLog_Internal(TEXT("Run Async Task Then Test Finished - TimeOut!"), bStopped);
+		}
+		else
+		{
+			AddToLog_Internal(TEXT(" Run Async Task Then Test Finished"), bStopped);
+		}
+		RunAsyncTaskThenTestFinished(bTimedOut);
+	},
+	TimeOut);
+}
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
 void UExampleWidget::TimeLockTest(ETimeLockTestType Type)
 {
 	if (Type == ETimeLockTestType::TL2Sec)
