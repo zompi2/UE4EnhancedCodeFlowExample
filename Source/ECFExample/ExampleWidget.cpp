@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Damian Nowakowski. All rights reserved.
+// Copyright (c) 2024 Damian Nowakowski. All rights reserved.
 
 #include "ExampleWidget.h"
 #include "EnhancedCodeFlow.h"
@@ -207,6 +207,61 @@ void UExampleWidget::WhileTrueExecuteTest(float TimeOut/* = 0.f*/)
 		WhileTrueExecuteTestFinished(bTimedOut);
 	},
 	TimeOut);
+}
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+void UExampleWidget::RunAsyncTaskThenTest(float TimeOut, EECFAsyncPrio Prio)
+{
+	AddToLog_Internal(TEXT("Start Run Async Task Then Test"));
+
+	FFlow::RunAsyncThen(this, [this]()
+	{
+		int32 Count = 0;
+		while (Count < 3)
+		{
+			Count++;
+			FPlatformProcess::Sleep(1.f);
+		}
+	},
+	[this](bool bTimedOut, bool bStopped)
+	{
+		if (bTimedOut)
+		{
+			AddToLog_Internal(TEXT("Run Async Task Then Test Finished - TimeOut!"), bStopped);
+		}
+		else
+		{
+			AddToLog_Internal(TEXT(" Run Async Task Then Test Finished"), bStopped);
+		}
+		RunAsyncTaskThenTestFinished(bTimedOut);
+	},
+	TimeOut, Prio);
+}
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+void UExampleWidget::RunAsyncAndWaitTest(float TimeOut, EECFAsyncPrio Prio)
+{
+	RunAsyncAndWaitTest_Implementation(TimeOut,  Prio);
+}
+
+FECFCoroutine UExampleWidget::RunAsyncAndWaitTest_Implementation(float TimeOut, EECFAsyncPrio Prio)
+{
+#ifdef __cpp_impl_coroutine
+	AddToLog_Internal(TEXT("Start Run Async And Wait Test"));
+	co_await FFlow::RunAsyncAndWait(this, [this]()
+	{
+		int32 Count = 0;
+		while (Count < 3)
+		{
+			Count++;
+			FPlatformProcess::Sleep(1.f);
+		}
+	}, TimeOut, Prio);
+	AddToLog_Internal(TEXT("Run Async And Wait Test Finished"));
+	RunAsyncAndWaitTestFinished();
+#endif
 }
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
