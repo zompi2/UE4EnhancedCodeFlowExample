@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Damian Nowakowski. All rights reserved.
+// Copyright (c) 2024 Damian Nowakowski. All rights reserved.
 
 using UnrealBuildTool;
 using System.Collections.Generic;
@@ -8,7 +8,8 @@ public class ECFExampleEditorTarget : TargetRules
 	public ECFExampleEditorTarget( TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Editor;
-		DefaultBuildSettings = BuildSettingsVersion.V2;
-		ExtraModuleNames.AddRange( new string[] { "ECFExample" } );
+        DefaultBuildSettings = BuildSettingsVersion.Latest;
+        IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
+        ExtraModuleNames.AddRange( new string[] { "ECFExample" } );
 	}
 }

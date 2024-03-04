@@ -1,11 +1,11 @@
-// Copyright (c) 2023 Damian Nowakowski. All rights reserved.
+// Copyright (c) 2024 Damian Nowakowski. All rights reserved.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "ECFTypes.h"
-#include "ECFCoroutine.h"
+#include "Coroutines/ECFCoroutine.h"
 #include "ECFInstanceId.h"
 #include "ExampleWidget.generated.h"
 
@@ -140,10 +140,19 @@ public:
 	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
 	UFUNCTION(BlueprintCallable)
-	void RunAsyncTaskThenTest(float TimeOut = 0.f);
+	void RunAsyncTaskThenTest(float TimeOut = 0.f, EECFAsyncPrio Prio = EECFAsyncPrio::Normal);
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void RunAsyncTaskThenTestFinished(bool bTimedOut);
+
+	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+	UFUNCTION(BlueprintCallable)
+	void RunAsyncAndWaitTest(float TimeOut = 0.f, EECFAsyncPrio Prio = EECFAsyncPrio::Normal);
+	FECFCoroutine RunAsyncAndWaitTest_Implementation(float TimeOut, EECFAsyncPrio Prio);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void RunAsyncAndWaitTestFinished();
 
 	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
