@@ -7,6 +7,7 @@
 #include "ECFTypes.h"
 #include "Coroutines/ECFCoroutine.h"
 #include "ECFInstanceId.h"
+#include "ECFActionSettings.h"
 #include "ExampleWidget.generated.h"
 
 UENUM(BlueprintType)
@@ -22,6 +23,20 @@ class ECFEXAMPLE_API UExampleWidget : public UUserWidget
 	GENERATED_BODY()
 	
 public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FECFActionSettings ActionSettings_CPP;
+
+	UPROPERTY(Transient)
+	class AExampleActor* ExActor = nullptr;
+
+
+	UFUNCTION(BlueprintCallable)
+	void CoroActorTest();
+
+	UFUNCTION(BlueprintCallable)
+	void ForceGC();
+
 
 	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
@@ -79,14 +94,22 @@ public:
 
 	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
+	int32 TimelinesTestsCount = 0;
+
 	UFUNCTION(BlueprintCallable)
 	void TimelineTest(EECFBlendFunc TimelineFunc, float StartValue, float StopValue);
+
+	UFUNCTION(BlueprintCallable)
+	void TimelineTestVec(EECFBlendFunc TimelineFunc, FVector StartValue, FVector StopValue);
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void TimelineTestFinished();
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void SetTimelineValue_BP(float NewValue, float NewTime);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetTimelineValueVec_BP(FVector NewValue, float NewTime);
 
 	/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 

@@ -9,7 +9,9 @@ public class ECFExampleTarget : TargetRules
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.Latest;
-		IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
-		ExtraModuleNames.AddRange( new string[] { "ECFExample" } );
+		DefaultWarningLevel = WarningLevel.Error;
+	    ShadowVariableWarningLevel = WarningLevel.Error;
+		// IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
+        ExtraModuleNames.AddRange( new string[] { "ECFExample" } );
 	}
 }

@@ -2,8 +2,24 @@
 
 #include "ExampleWidget.h"
 #include "EnhancedCodeFlow.h"
+#include "ExampleActor.h"
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+void UExampleWidget::CoroActorTest()
+{
+	if (ExActor)
+	{
+		return;
+	}
+
+	ExActor = GetWorld()->SpawnActor<AExampleActor>();
+}
+
+void UExampleWidget::ForceGC()
+{
+	GEngine->ForceGarbageCollection(true);
+}
 
 void UExampleWidget::AddToLog_Internal(FString Log, bool bStopped/* = false*/)
 {
@@ -36,9 +52,13 @@ void UExampleWidget::WaitSecondsTest()
 FECFCoroutine UExampleWidget::WaitSecondsTest_Implementation()
 {
 #ifdef __cpp_impl_coroutine
-	AddToLog_Internal(TEXT("Start Wait Seconds Test"));
-	co_await FFlow::WaitSeconds(this, 2.f);
-	AddToLog_Internal(TEXT("Wait Seconds Test Finished"));
+	AddToLog_Internal(TEXT("Start Wait Three Test"));
+	co_await FFlow::WaitSeconds(this, 1.f);
+	AddToLog_Internal(TEXT("Wait Test Finished 1/3"));
+	co_await FFlow::WaitSeconds(this, 1.f);
+	AddToLog_Internal(TEXT("Wait Test Finished 2/3"));
+	co_await FFlow::WaitSeconds(this, 1.f);
+	AddToLog_Internal(TEXT("Wait Test Finished 3/3"));
 	WaitSecondsTestFinished();
 #endif
 }
@@ -102,14 +122,41 @@ void UExampleWidget::TimelineTest(EECFBlendFunc TimelineFunc, float StartValue, 
 
 	SetTimelineValue_BP(0.f, 0.f);
 
+	TimelinesTestsCount++;
 	FFlow::AddTimeline(this, StartValue, StopValue, 2.f, [this](float Value, float Time)
 	{
 		SetTimelineValue_BP(Value, Time);
-	}, [this](float Value, float Time, bool bStopped)
+	}, [this](float Value, float Time)
 	{
 		SetTimelineValue_BP(Value, Time);
-		AddToLog_Internal(TEXT("Timeline Test Finished"), bStopped);
-		TimelineTestFinished();
+		AddToLog_Internal(TEXT("Timeline Test Finished"), false);
+		TimelinesTestsCount--;
+		if (TimelinesTestsCount <= 0)
+		{
+			TimelineTestFinished();
+		}
+	}, TimelineFunc, 2.f);
+}
+
+void UExampleWidget::TimelineTestVec(EECFBlendFunc TimelineFunc, FVector StartValue, FVector StopValue)
+{
+	AddToLog_Internal(TEXT("Start Timeline Test Vec"));
+
+	SetTimelineValueVec_BP(FVector(0,0,0), 0.f);
+
+	TimelinesTestsCount++;
+	FFlow::AddTimelineVector(this, StartValue, StopValue, 2.f, [this](FVector Value, float Time)
+	{
+		SetTimelineValueVec_BP(Value, Time);
+	}, [this](FVector Value, float Time)
+	{
+		SetTimelineValueVec_BP(Value, Time);
+		AddToLog_Internal(TEXT("Timeline Test Finished Vec"), false);
+		TimelinesTestsCount--;
+		if (TimelinesTestsCount <= 0)
+		{
+			TimelineTestFinished();
+		}
 	}, TimelineFunc, 2.f);
 }
 
