@@ -35,7 +35,7 @@ void UExampleWidget::WaitSecondsTest()
 
 FECFCoroutine UExampleWidget::WaitSecondsTest_Implementation()
 {
-#ifdef __cpp_impl_coroutine
+#if ECF_WITH_COROUTINES
 	AddToLog_Internal(TEXT("Start Wait Seconds Test"));
 	co_await FFlow::WaitSeconds(this, 2.f);
 	AddToLog_Internal(TEXT("Wait Seconds Test Finished"));
@@ -52,7 +52,7 @@ void UExampleWidget::WaitTicksTest()
 
 FECFCoroutine UExampleWidget::WaitTicksTest_Implementation()
 {
-#ifdef __cpp_impl_coroutine
+#if ECF_WITH_COROUTINES
 	AddToLog_Internal(TEXT("Start Wait Ticks Test"));
 	co_await FFlow::WaitTicks(this, 100);
 	AddToLog_Internal(TEXT("Wait Ticks Test Finished"));
@@ -166,7 +166,7 @@ void UExampleWidget::WaitUntilTest(float TimeOut)
 
 FECFCoroutine UExampleWidget::WaitUntilTest_Implementation(float TimeOut)
 {
-#ifdef __cpp_impl_coroutine
+#if ECF_WITH_COROUTINES
 	AddToLog_Internal(TEXT("Start Wait Until Test"));
 	WaitAndExecuteTime = 0.f;
 	co_await FFlow::WaitUntil(this, [this](float DeltaTime)
@@ -248,7 +248,7 @@ void UExampleWidget::RunAsyncAndWaitTest(float TimeOut, EECFAsyncPrio Prio)
 
 FECFCoroutine UExampleWidget::RunAsyncAndWaitTest_Implementation(float TimeOut, EECFAsyncPrio Prio)
 {
-#ifdef __cpp_impl_coroutine
+#if ECF_WITH_COROUTINES
 	AddToLog_Internal(TEXT("Start Run Async And Wait Test"));
 	co_await FFlow::RunAsyncAndWait(this, [this]()
 	{
