@@ -8,8 +8,10 @@ public class ECFExampleTarget : TargetRules
 	public ECFExampleTarget( TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
-		DefaultBuildSettings = BuildSettingsVersion.Latest;
+#if UE_5_0_OR_LATER
+        DefaultBuildSettings = BuildSettingsVersion.Latest;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
+#endif
 		ExtraModuleNames.AddRange( new string[] { "ECFExample" } );
 	}
 }
